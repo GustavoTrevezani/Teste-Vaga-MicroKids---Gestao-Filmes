@@ -25,7 +25,7 @@ import { Movie, UserMovie } from "../../models/movie.model";
             <div class="flex items-center gap-2 mt-1">
               <span class="badge-primary">{{ authService.user()?.role }}</span>
               <span class="text-sm text-text-muted"
-                >Member since
+                >Membro desde
                 {{ formatDate(authService.user()?.createdAt) }}</span
               >
             </div>
@@ -122,10 +122,10 @@ import { Movie, UserMovie } from "../../models/movie.model";
                 </svg>
               </div>
               <h3 class="text-xl font-semibold text-text mb-2">
-                No favorites yet
+                Sem favoritos por enquanto
               </h3>
               <p class="text-text-muted">
-                Start adding movies to your favorites list
+                Comece a adicionar filmes à sua lista de favoritos
               </p>
             </div>
           }
@@ -165,10 +165,10 @@ import { Movie, UserMovie } from "../../models/movie.model";
                 </svg>
               </div>
               <h3 class="text-xl font-semibold text-text mb-2">
-                No watched movies
+                Sem filmes assistidos
               </h3>
               <p class="text-text-muted">
-                Mark movies as watched to see them here
+                Marque filmes como assistidos para vê-los aqui
               </p>
             </div>
           }

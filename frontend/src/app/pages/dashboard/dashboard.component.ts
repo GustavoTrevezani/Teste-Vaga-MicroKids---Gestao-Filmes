@@ -69,9 +69,9 @@ import { Movie } from "../../models/movie.model";
       @if (movies().length > 0) {
         <div class="mb-4 flex items-center justify-between">
           <p class="text-text-muted">
-            Found
+            Achado
             <span class="text-text font-medium">{{ movies().length }}</span>
-            results
+            resultados para "{{ searchQuery }}"
           </p>
         </div>
         <div

@@ -34,8 +34,10 @@ import { AuthService } from "../../services/auth.service";
                   d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
             </div>
-            <h1 class="text-2xl font-bold text-text">Create Account</h1>
-            <p class="text-text-muted mt-2">Join our movie community</p>
+            <h1 class="text-2xl font-bold text-text">Criar conta</h1>
+            <p class="text-text-muted mt-2">
+              Junte-se à nossa comunidade de filmes
+            </p>
           </div>
 
           <form
@@ -53,18 +55,18 @@ import { AuthService } from "../../services/auth.service";
                 id="email"
                 formControlName="email"
                 class="input-field"
-                placeholder="Enter your email" />
+                placeholder="Digite seu email" />
               @if (
                 registerForm.get("email")?.touched &&
                 registerForm.get("email")?.errors?.["required"]
               ) {
-                <p class="text-error text-sm mt-1">Email is required</p>
+                <p class="text-error text-sm mt-1">Email é obrigatório</p>
               }
               @if (
                 registerForm.get("email")?.touched &&
                 registerForm.get("email")?.errors?.["email"]
               ) {
-                <p class="text-error text-sm mt-1">Invalid email format</p>
+                <p class="text-error text-sm mt-1">Formato de email inválido</p>
               }
             </div>
 
@@ -72,26 +74,26 @@ import { AuthService } from "../../services/auth.service";
               <label
                 for="password"
                 class="block text-sm font-medium text-text mb-1.5">
-                Password
+                Senha
               </label>
               <input
                 type="password"
                 id="password"
                 formControlName="password"
                 class="input-field"
-                placeholder="Create a password" />
+                placeholder="Crie uma senha" />
               @if (
                 registerForm.get("password")?.touched &&
                 registerForm.get("password")?.errors?.["required"]
               ) {
-                <p class="text-error text-sm mt-1">Password is required</p>
+                <p class="text-error text-sm mt-1">Senha é obrigatória</p>
               }
               @if (
                 registerForm.get("password")?.touched &&
                 registerForm.get("password")?.errors?.["minlength"]
               ) {
                 <p class="text-error text-sm mt-1">
-                  Password must be at least 6 characters
+                  A senha deve ter pelo menos 6 caracteres
                 </p>
               }
             </div>
@@ -124,15 +126,15 @@ import { AuthService } from "../../services/auth.service";
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Creating account...
+                Criando conta...
               } @else {
-                Create Account
+                Criar conta
               }
             </button>
           </form>
 
           <p class="text-center text-text-muted mt-6">
-            Already have an account?
+            Já possui uma conta?
             <a
               routerLink="/login"
               class="text-primary hover:text-primary-hover font-medium">
