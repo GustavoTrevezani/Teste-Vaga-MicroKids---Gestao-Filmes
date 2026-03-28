@@ -7,7 +7,7 @@ import { Movie } from "../../models/movie.model";
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="card-hover group">
+    <div class="card-hover group flex flex-col h-full ">
       <div class="relative aspect-[2/3] overflow-hidden bg-surface-hover">
         @if (movie.poster && movie.poster !== "N/A") {
           <img
@@ -38,9 +38,9 @@ import { Movie } from "../../models/movie.model";
         </div>
       </div>
 
-      <div class="p-4">
+      <div class="p-4 flex-1 flex flex-col">
         <h3
-          class="font-semibold text-text line-clamp-2 mb-1"
+          class="font-semibold text-text line-clamp-2 min-h-[3rem]"
           [title]="movie.title">
           {{ movie.title }}
         </h3>
@@ -51,12 +51,12 @@ import { Movie } from "../../models/movie.model";
         </div>
 
         @if (showActions) {
-          <div class="flex gap-2 mt-3">
+          <div class="flex min-w-0 flex-col sm:flex-row gap-2 mt-auto">
             @if (!isRemoveMode) {
               <button
                 (click)="onFavorite()"
                 [disabled]="isLoadingFavorite()"
-                class="btn-accent flex-1 text-sm py-2 flex items-center justify-center gap-1.5">
+                class="btn-accent flex-1 min-w-[120px] text-sm py-2 flex items-center justify-center gap-1.5">
                 @if (isLoadingFavorite()) {
                   <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
                     <circle
@@ -83,7 +83,7 @@ import { Movie } from "../../models/movie.model";
               <button
                 (click)="onWatched()"
                 [disabled]="isLoadingWatched()"
-                class="btn-secondary flex-1 text-sm py-2 flex items-center justify-center gap-1.5">
+                class="btn-secondary flex-1 min-w-0 text-sm py-2 flex items-center justify-center gap-1.5">
                 @if (isLoadingWatched()) {
                   <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
                     <circle
