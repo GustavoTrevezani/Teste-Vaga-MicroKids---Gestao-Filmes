@@ -102,7 +102,7 @@ import { forkJoin } from "rxjs";
                   </div>
                   <div
                     class="w-16 h-24 rounded overflow-hidden bg-surface-hover flex-shrink-0">
-                    @if (item.poster && item.poster !== "N/A") {
+                    @if (item.movie.poster && item.movie.poster !== "N/A") {
                       <img
                         [src]="item.movie.poster"
                         [alt]="item.movie.title"
@@ -111,10 +111,10 @@ import { forkJoin } from "rxjs";
                   </div>
                   <div class="flex-1">
                     <h3 class="font-semibold text-text">
-                      {{ item.movie?.title }}
+                      {{ item.movie.title }}
                     </h3>
                     <p class="text-sm text-text-muted">
-                      {{ item.movie?.year }}
+                      {{ item.movie.year }}
                     </p>
                   </div>
                   <div class="text-right">
@@ -163,7 +163,7 @@ import { forkJoin } from "rxjs";
                   </div>
                   <div
                     class="w-16 h-24 rounded overflow-hidden bg-surface-hover flex-shrink-0">
-                    @if (item.movie?.poster && item.movie.poster !== "N/A") {
+                    @if (item.movie.poster && item.movie.poster !== "N/A") {
                       <img
                         [src]="item.movie.poster"
                         [alt]="item.movie.title"
