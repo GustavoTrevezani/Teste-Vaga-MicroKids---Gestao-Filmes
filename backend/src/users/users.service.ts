@@ -28,15 +28,25 @@ export class UsersService {
   }
 
   async searchUsers(query?: string) {
-    if (!query || !query.trim()) {
-      return this.prisma.user.findMany();
-    }
-
     return this.prisma.user.findMany({
-      where: {
-        email: {
-          contains: query.trim(),
-          mode: "insensitive",
+      where: query
+        ? {
+            email: {
+              contains: query,
+              mode: "insensitive",
+            },
+          }
+        : undefined,
+      include: {
+        favorites: {
+          include: {
+            movie: true,
+          },
+        },
+        watched: {
+          include: {
+            movie: true,
+          },
         },
       },
     });
