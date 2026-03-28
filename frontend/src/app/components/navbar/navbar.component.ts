@@ -148,7 +148,14 @@ import {
                 class="absolute right-0 mt-2 min-w-[14rem] max-w-xs bg-surface rounded-lg border border-border shadow-xl">
                 <div class="p-3 border-b border-border">
                   <p class="font-medium text-text">
-                    {{ userEmailPrefix }}
+                    <a
+                      routerLink="/profile"
+                      class="relative inline-block text-text hover:text-primary transition-colors duration-200
+                      after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 
+                    after:bg-primary after:transition-all after:duration-300 
+                      hover:after:w-full">
+                      {{ userEmailPrefix }}
+                    </a>
                   </p>
                   <span class="text-xs text-text-muted">{{
                     authService.user()?.role
