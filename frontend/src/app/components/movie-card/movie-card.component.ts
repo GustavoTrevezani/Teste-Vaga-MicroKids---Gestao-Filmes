@@ -13,6 +13,8 @@ import { Movie } from "../../models/movie.model";
           <img
             [src]="movie.poster"
             [alt]="movie.title"
+            (error)="onImageError($event)"
+            class="w-full h-auto rounded-lg"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
         } @else {
           <div
@@ -171,6 +173,12 @@ export class MovieCardComponent {
   isLoadingFavorite = signal(false);
   isLoadingWatched = signal(false);
   isLoadingRemove = signal(false);
+
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.onerror = null;
+    img.src = "/404NotFound.png";
+  }
 
   onFavorite(): void {
     this.isLoadingFavorite.set(true);
