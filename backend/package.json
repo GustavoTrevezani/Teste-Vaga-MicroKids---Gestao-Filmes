@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nest start --watch /src/main.ts"
+    "build": "npx nest build",
+    "start": "node dist/main.js",
+    "start:prod": "node dist/main.js",
+    "start:dev": "npx nest start --watch",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "",
