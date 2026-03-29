@@ -37,16 +37,24 @@ export class ErrorService {
   };
 
   translate(message: string): string {
-    return this.errorsMap[message] || "Erro inesperado";
+    if (!message) return "Erro inesperado";
+
+    const normalized = message.trim();
+
+    return this.errorsMap[normalized] || message;
   }
 
   extractMessage(err: any): string {
     let message = err?.error?.message;
 
     if (Array.isArray(message)) {
-      message = message.join(", ");
+      message = message[0];
     }
 
-    return message || err?.message || "Erro inesperado";
+    if (typeof message === "string") {
+      return message;
+    }
+
+    return err?.message || "Erro inesperado";
   }
 }

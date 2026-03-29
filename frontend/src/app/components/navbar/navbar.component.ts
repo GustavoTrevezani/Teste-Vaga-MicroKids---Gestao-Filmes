@@ -7,6 +7,8 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
+  AbstractControl,
 } from "@angular/forms";
 import { ErrorService } from "../../services/error.service";
 
@@ -223,9 +225,21 @@ import { ErrorService } from "../../services/error.service";
               formControlName="email"
               class="border border-gray-300 rounded-lg p-2 text-black"
               required />
+            @if (
+              adminForm.get("email")?.touched &&
+              adminForm.get("email")?.errors?.["required"]
+            ) {
+              <p class="text-error text-sm mt-1">Email é obrigatório</p>
+            }
+            @if (
+              adminForm.get("email")?.touched &&
+              adminForm.get("email")?.errors?.["email"]
+            ) {
+              <p class="text-error text-sm mt-1">Formato de email inválido</p>
+            }
           </div>
 
-          <!-- Password -->
+          <!-- Password admin Modal-->
           <div class="flex flex-col">
             <label class="mb-1 font-medium text-text">Senha</label>
             <input
@@ -233,7 +247,26 @@ import { ErrorService } from "../../services/error.service";
               placeholder="Sua senha"
               formControlName="password"
               class="border border-gray-300 rounded-lg p-2 text-black"
+              [ngClass]="{
+                'border-red-500':
+                  adminForm.get('confirmPassword')?.touched &&
+                  adminForm.get('confirmPassword')?.invalid,
+              }"
               required />
+            @if (
+              adminForm.get("password")?.touched &&
+              adminForm.get("password")?.errors?.["required"]
+            ) {
+              <p class="text-error text-sm mt-1">Senha é obrigatória</p>
+            }
+            @if (
+              adminForm.get("password")?.touched &&
+              adminForm.get("password")?.errors?.["minlength"]
+            ) {
+              <p class="text-error text-sm mt-1">
+                A senha deve ter pelo menos 6 caracteres
+              </p>
+            }
           </div>
 
           <!-- Buttons -->
@@ -277,7 +310,20 @@ import { ErrorService } from "../../services/error.service";
               placeholder="Senha Atual"
               formControlName="currentPassword"
               class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary text-black"
+              [ngClass]="{
+                'border-red-500':
+                  passwordForm.get('currentPassword')?.touched &&
+                  passwordForm.get('currentPassword')?.invalid,
+                'border-gray-300':
+                  !passwordForm.get('currentPassword')?.invalid,
+              }"
               required />
+            @if (
+              passwordForm.get("currentPassword")?.touched &&
+              passwordForm.get("currentPassword")?.errors?.["required"]
+            ) {
+              <p class="text-error text-sm mt-1">Senha atual é obrigatória</p>
+            }
           </div>
 
           <!-- New Password -->
@@ -291,7 +337,21 @@ import { ErrorService } from "../../services/error.service";
               placeholder="Nova Senha"
               formControlName="newPassword"
               class="border border-gray-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary text-black"
+              [ngClass]="{
+                'border-red-500':
+                  passwordForm.get('newPassword')?.touched &&
+                  passwordForm.get('newPassword')?.invalid,
+                'border-gray-300': !passwordForm.get('newPassword')?.invalid,
+              }"
               required />
+            @if (
+              passwordForm.get("newPassword")?.touched &&
+              passwordForm.get("newPassword")?.errors?.["minlength"]
+            ) {
+              <p class="text-error text-sm mt-1">
+                A nova senha deve ter pelo menos 6 caracteres
+              </p>
+            }
           </div>
 
           <!-- Confirm New Password -->
@@ -305,7 +365,27 @@ import { ErrorService } from "../../services/error.service";
               placeholder="Confirmar Senha"
               formControlName="confirmPassword"
               class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary text-black"
+              [ngClass]="{
+                'border-red-500':
+                  passwordForm.get('confirmPassword')?.touched &&
+                  (passwordForm.get('confirmPassword')?.invalid ||
+                    passwordForm.errors?.['mismatch']),
+              }"
               required />
+            @if (
+              passwordForm.get("confirmPassword")?.touched &&
+              passwordForm.get("confirmPassword")?.errors?.["required"]
+            ) {
+              <p class="text-error text-sm mt-1">
+                Confirmar senha é obrigatório
+              </p>
+            }
+            @if (
+              passwordForm.get("confirmPassword")?.touched &&
+              passwordForm.errors?.["mismatch"]
+            ) {
+              <p class="text-error text-sm mt-1">As senhas não coincidem</p>
+            }
           </div>
 
           <!-- Botões -->
@@ -393,11 +473,16 @@ export class NavbarComponent {
   toastMessage = signal("");
   toastType = signal<"success" | "error">("success");
 
-  passwordForm: FormGroup = this.fb.group({
-    currentPassword: ["", Validators.required],
-    newPassword: ["", Validators.required],
-    confirmPassword: ["", Validators.required],
-  });
+  passwordForm: FormGroup = this.fb.group(
+    {
+      currentPassword: ["", Validators.required],
+      newPassword: ["", [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ["", Validators.required],
+    },
+    {
+      validators: this.passwordMatchValidator,
+    },
+  );
 
   adminForm: FormGroup = this.fb.group({
     email: ["", [Validators.required, Validators.email]],
@@ -483,6 +568,16 @@ export class NavbarComponent {
       },
     });
   }
+
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const newPassword = control.get("newPassword")?.value;
+    const confirmPassword = control.get("confirmPassword")?.value;
+
+    if (!newPassword || !confirmPassword) return null;
+
+    return newPassword === confirmPassword ? null : { mismatch: true };
+  }
+
   private showToast(
     message: string,
     type: "success" | "error" = "success",
