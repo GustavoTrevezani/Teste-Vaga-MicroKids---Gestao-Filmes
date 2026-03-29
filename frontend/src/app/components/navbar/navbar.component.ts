@@ -213,7 +213,8 @@ import { ErrorService } from "../../services/error.service";
                   <!-- Delete Account -->
                   <button
                     (click)="openDeleteModal()"
-                    class="w-full flex items-center gap-2 px-3 py-2 text-left text-error hover:bg-error/10 rounded-lg transition-colors">
+                    class="w-full flex items-center gap-2 px-3 py-2 text-left bg-red-500 text-white hover:bg-red-600 
+rounded-lg transition-colors">
                     <svg
                       class="w-5 h-5"
                       fill="none"
@@ -223,7 +224,7 @@ import { ErrorService } from "../../services/error.service";
                         stroke-linecap="round"
                         stroke-linejoin="round"
                         stroke-width="2"
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        d="M6 7h12M9 7V4h6v3m-7 4v6m4-6v6m5-10H5l1 14h12l1-14z" />
                     </svg>
                     Excluir conta
                   </button>
