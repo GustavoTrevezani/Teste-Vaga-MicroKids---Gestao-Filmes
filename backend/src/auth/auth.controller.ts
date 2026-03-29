@@ -14,6 +14,8 @@ import { ResetPasswordDto } from "./dto/requestPassword.dto";
 import { RequestResetDto } from "./dto/requestReset.dto";
 import { JwtAuthGuard } from "./jwtAuth.guard";
 import { NewPasswordLoggedDto } from "./dto/newPasswordLoged.dto";
+import { Roles } from "./roles.decorator";
+import { RolesGuard } from "./roles.guard";
 
 @Controller("auth")
 export class AuthController {
@@ -50,5 +52,12 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   getMe(@Req() req: Request & { user: any }) {
     return req.user;
+  }
+
+  @Post("register-admin")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("ADMIN")
+  registerAdmin(@Body() dto: RegisterDto) {
+    return this.authService.createAdmin(dto);
   }
 }

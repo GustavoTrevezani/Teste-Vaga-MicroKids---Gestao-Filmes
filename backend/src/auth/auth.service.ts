@@ -34,6 +34,20 @@ export class AuthService {
     return this.signToken(user.id, user.email, user.role);
   }
 
+  async createAdmin(dto: RegisterDto) {
+    const exists = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+    if (exists) throw new ConflictException("Email already in use");
+
+    const hashed = await bcrypt.hash(dto.password, 10);
+    const user = await this.prisma.user.create({
+      data: { email: dto.email, password: hashed, role: "ADMIN" },
+    });
+
+    return this.signToken(user.id, user.email, user.role);
+  }
+
   async login(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },

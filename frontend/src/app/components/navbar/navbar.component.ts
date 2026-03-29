@@ -162,6 +162,13 @@ import {
                   }}</span>
                 </div>
                 <div class="p-2 flex flex-col gap-1">
+                  @if (authService.isAdmin()) {
+                    <button
+                      (click)="openCreateAdmin()"
+                      class="w-full flex items-center gap-2 px-3 py-2 text-left text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                      Criar Conta Admin
+                    </button>
+                  }
                   <button
                     (click)="openChangePassword()"
                     class="w-full flex items-center gap-2 px-3 py-2 text-left text-primary hover:bg-primary/10 rounded-lg transition-colors">
@@ -195,6 +202,57 @@ import {
     @if (isDropdownOpen()) {
       <div class="fixed inset-0 z-40" (click)="isDropdownOpen.set(false)"></div>
     }
+    <!-- Create Admin Modal -->
+    <div
+      *ngIf="isCreateAdminOpen()"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div class="bg-surface rounded-lg p-6 w-full max-w-md shadow-lg">
+        <h2 class="text-xl font-bold text-center mb-6">Criar Conta Admin</h2>
+
+        <form
+          [formGroup]="adminForm"
+          (ngSubmit)="createAdmin()"
+          class="flex flex-col gap-4">
+          <!-- Email -->
+          <div class="flex flex-col">
+            <label class="mb-1 font-medium text-text">Email</label>
+            <input
+              type="email"
+              placeholder="Email do admin"
+              formControlName="email"
+              class="border border-gray-300 rounded-lg p-2 text-black"
+              required />
+          </div>
+
+          <!-- Password -->
+          <div class="flex flex-col">
+            <label class="mb-1 font-medium text-text">Senha</label>
+            <input
+              type="password"
+              placeholder="Sua senha"
+              formControlName="password"
+              class="border border-gray-300 rounded-lg p-2 text-black"
+              required />
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-end gap-3 mt-4">
+            <button
+              type="button"
+              (click)="isCreateAdminOpen.set(false)"
+              class="px-4 py-2 rounded-lg bg-red-500 text-white">
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              [disabled]="adminForm.invalid"
+              class="px-4 py-2 rounded-lg bg-primary text-white">
+              Criar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
     <!-- Change Password Modal -->
     <div
       *ngIf="isChangePasswordOpen()"
@@ -272,11 +330,17 @@ import {
 export class NavbarComponent {
   isDropdownOpen = signal(false);
   isChangePasswordOpen = signal(false);
+  isCreateAdminOpen = signal(false);
 
   passwordForm: FormGroup = this.fb.group({
     currentPassword: ["", Validators.required],
     newPassword: ["", Validators.required],
     confirmPassword: ["", Validators.required],
+  });
+
+  adminForm: FormGroup = this.fb.group({
+    email: ["", [Validators.required, Validators.email]],
+    password: ["", [Validators.required, Validators.minLength(6)]],
   });
 
   constructor(
@@ -298,6 +362,7 @@ export class NavbarComponent {
     this.isDropdownOpen.set(false);
     this.authService.logout();
   }
+  // Change password
   openChangePassword(): void {
     this.isDropdownOpen.set(false);
     this.isChangePasswordOpen.set(true);
@@ -325,5 +390,28 @@ export class NavbarComponent {
           alert("Erro ao alterar senha: " + err.error?.message || err.message);
         },
       });
+  }
+
+  // Create admin
+  openCreateAdmin(): void {
+    this.isDropdownOpen.set(false);
+    this.isCreateAdminOpen.set(true);
+  }
+
+  createAdmin(): void {
+    if (this.adminForm.invalid) return;
+
+    const { email, password } = this.adminForm.value;
+
+    this.authService.registerAdmin({ email, password }).subscribe({
+      next: () => {
+        alert("Admin criado com sucesso");
+        this.isCreateAdminOpen.set(false);
+        this.adminForm.reset();
+      },
+      error: (err) => {
+        alert("Erro: " + (err.error?.message || err.message));
+      },
+    });
   }
 }
