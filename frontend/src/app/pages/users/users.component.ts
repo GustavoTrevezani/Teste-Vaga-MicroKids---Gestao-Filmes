@@ -77,7 +77,7 @@ import { ErrorService } from "../../services/error.service";
             <div class="card overflow-hidden">
               <!-- User Header -->
               <div class="p-6 border-b border-border">
-                <div class="flex items-center gap-4">
+                <div class="flex items-center justify-between w-full">
                   <div
                     class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-lg font-bold text-white">
                     {{ getUserInitials(user.email) }}
@@ -88,15 +88,18 @@ import { ErrorService } from "../../services/error.service";
                       Membro desde {{ formatDate(user.createdAt) }}
                     </p>
                   </div>
-                  <span class="badge-primary">{{ user.role }}</span>
+                  <div class="flex items-center gap-3">
+                    <span class="badge-primary">{{ user.role }}</span>
+                  </div>
+                  <!-- Button Delete User -->
+                  <button
+                    (click)="confirmDeleteUser(user.id)"
+                    class="p-2 rounded-lg
+                    hover:bg-red-100 text-red-600"
+                    title="Excluir usuário">
+                    Deletar
+                  </button>
                 </div>
-                <!-- Button Delete User -->
-                <button
-                  type="button"
-                  (click)="confirmDeleteUser(user.id)"
-                  class="px-3 py-1 rounded-lg bg-error text-white hover:bg-error/90 text-sm">
-                  Deletar
-                </button>
               </div>
 
               <!-- User Movies -->

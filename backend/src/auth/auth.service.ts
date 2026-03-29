@@ -41,11 +41,11 @@ export class AuthService {
     if (exists) throw new ConflictException("Email already in use");
 
     const hashed = await bcrypt.hash(dto.password, 10);
-    const user = await this.prisma.user.create({
+    await this.prisma.user.create({
       data: { email: dto.email, password: hashed, role: "ADMIN" },
     });
 
-    return this.signToken(user.id, user.email, user.role);
+    return { message: "Admin criado com sucesso" };
   }
 
   async login(dto: LoginDto) {

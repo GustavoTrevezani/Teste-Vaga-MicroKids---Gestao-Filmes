@@ -70,17 +70,14 @@ export class AuthService {
       );
   }
 
-  registerAdmin(data: RegisterRequest): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.API_URL}/auth/register-admin`, data)
-      .pipe(
-        tap((response) => this.handleAuthSuccess(response)),
-        catchError((error) => {
-          return throwError(
-            () => new Error(error.error?.message || "Registration failed"),
-          );
-        }),
-      );
+  registerAdmin(data: RegisterRequest): Observable<any> {
+    return this.http.post(`${this.API_URL}/auth/register-admin`, data).pipe(
+      catchError((error) => {
+        return throwError(
+          () => new Error(error.error?.message || "Registration failed"),
+        );
+      }),
+    );
   }
 
   requestPasswordReset(data: RequestResetRequest): Observable<void> {
