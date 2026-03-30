@@ -8,7 +8,7 @@ import {
   UserWithMovies,
   UserMovie,
 } from "../models/movie.model";
-import { environment } from "../../environments/environments";
+import { environment } from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: "root",
