@@ -10,12 +10,13 @@ import {
   RequestResetRequest,
   ResetPasswordRequest,
 } from "../models/user.model";
+import { environment } from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  private readonly API_URL = "http://localhost:3000";
+  private readonly API_URL = environment.apiUrl;
   private readonly TOKEN_KEY = "jwt_token";
   private readonly USER_KEY = "user_data";
 
