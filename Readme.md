@@ -2,7 +2,10 @@
 
 Projeto desenvolvido como teste técnico, com o objetivo de criar uma aplicação completa (frontend + backend) para gerenciamento e consulta de filmes utilizando API externa (OMDb).
 
-🔗 Deploy: Ainda não funcionando na Vercel e Railway!
+## 🔗 Deploy: [Gestão de Filmes acesse por aqui!](https://teste-vaga-micro-kids-gestao-filmes.vercel.app)
+
+**⚠️ Observação:**
+**O backend está hospedado no Render (free tier), podendo levar alguns segundos na primeira requisição devido ao cold start.**
 
 ## 🚀 Como rodar o projeto
 
