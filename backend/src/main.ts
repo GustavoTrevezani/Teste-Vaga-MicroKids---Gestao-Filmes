@@ -16,7 +16,7 @@ async function bootstrap() {
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://teste-vaga-micro-kids-gestao-filmes.vercel.app",
+      "https://movies-catalog-api.vercel.app",
     ],
     credentials: true,
   });
