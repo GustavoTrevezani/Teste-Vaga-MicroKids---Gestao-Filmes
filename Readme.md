@@ -1,4 +1,4 @@
-# 🎬 Gestão de Filmes
+# 🎬 Movie Management System
 
 Project developed as a technical test, aiming to build a full application (frontend + backend) for managing and querying movies using an external API (OMDb).
 
